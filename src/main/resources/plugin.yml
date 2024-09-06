@@ -1,0 +1,8 @@
+name: BlockToCommand
+version: '${project.version}'
+main: dev.thew.blocktocommand.BlockToCommand
+api-version: '1.16'
+author: Thew
+commands:
+  blockcmd:
+    permission: blockcmd.edit
