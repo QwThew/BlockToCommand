@@ -37,5 +37,5 @@ public abstract class LongCommandExecutor implements TabExecutor {
     }
 
 
-    @Getter public record SubCommandWrapper(SubCommand command, String[] aliases, Permission permission) {}
+    public record SubCommandWrapper(SubCommand command, String[] aliases, Permission permission) {}
 }

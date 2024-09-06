@@ -31,12 +31,14 @@ public class CMDSet implements SubCommand {
 
         CMD cmd = getCMD(command, cmdType);
         Block block = player.getTargetBlock(null,10);
+        String id = StringUtils.blockToString(block);
+
 
         CMDService cmdService = BlockToCommand.getCmdService();
         if (cmdService == null) return;
         if (cmdService.isCMDBlockExist(block)) return;
 
-        CMDBlock cmdBlock = new CMDBlock(cmd, block);
+        CMDBlock cmdBlock = new CMDBlock(id, cmd, block);
         cmdService.addCMDBlock(cmdBlock);
 
         player.sendMessage("    Блок успешно добавлен!");

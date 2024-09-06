@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 @AllArgsConstructor
 public class CMDBlock {
 
+    private String id;
     private CMD cmdCommand;
     private Block block;
 

@@ -58,10 +58,17 @@ public class CMDService implements Listener {
             CMDType cmdType = CMDType.valueOf(stringCMDType.toUpperCase());
 
             CMD cmd = new CMD(command, cmdType);
-            CMDBlock cmdBlock = new CMDBlock(cmd, block);
+            CMDBlock cmdBlock = new CMDBlock(key, cmd, block);
             cmdBlocks.add(cmdBlock);
         }
 
+    }
+
+    public @Nullable CMDBlock getCMDBlock(String id){
+        for (CMDBlock cmdBlock : cmdBlocks)
+            if (cmdBlock.getId().equalsIgnoreCase(id)) return cmdBlock;
+
+        return null;
     }
 
     public @Nullable CMDBlock getCMDBlock(Block block){
