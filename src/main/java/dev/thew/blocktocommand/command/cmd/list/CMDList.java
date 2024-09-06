@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,7 +55,17 @@ public class CMDList  implements SubCommand {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        if (args.length == 1) return getIds(BlockToCommand.getCmdService().getCmdBlocks());
         return Collections.emptyList();
+    }
+
+    private List<String> getIds(List<CMDBlock> cmdBlocks){
+        List<String> ids = new ArrayList<>();
+
+        for (CMDBlock cmdBlock : cmdBlocks)
+            ids.add(cmdBlock.getId());
+
+        return ids;
     }
 
 

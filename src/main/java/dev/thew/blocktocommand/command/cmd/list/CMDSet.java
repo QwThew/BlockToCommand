@@ -49,8 +49,8 @@ public class CMDSet implements SubCommand {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) return List.of("ERROR", "ERROR");
-        if (args.length == 0) return List.of("CONSOLE", "PLAYER");
+        if (!(sender instanceof Player)) return List.of("ERROR", "ERROR");
+        if (args.length == 1) return List.of("CONSOLE", "PLAYER");
 
         return Collections.emptyList();
     }

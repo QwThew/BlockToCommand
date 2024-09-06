@@ -34,7 +34,7 @@ public class CMDTeleport  implements SubCommand {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
-        if (args.length == 0) return getIds(BlockToCommand.getCmdService().getCmdBlocks());
+        if (args.length == 1) return getIds(BlockToCommand.getCmdService().getCmdBlocks());
         return Collections.emptyList();
     }
 
@@ -45,22 +45,5 @@ public class CMDTeleport  implements SubCommand {
             ids.add(cmdBlock.getId());
 
         return ids;
-    }
-
-    public CMDType getCmdType(String string) {
-        String cmdTypeString = string.toUpperCase();
-        return CMDType.valueOf(cmdTypeString);
-    }
-
-    public CMD getCMD(String command, CMDType type) {
-        return new CMD(command, type);
-    }
-
-    public String getCommand(String[] args, int multiple){
-        StringBuilder commandBuilder = new StringBuilder();
-        for (int i = multiple; i < args.length; i++)
-            commandBuilder.append(args[i]).append(" ");
-
-        return commandBuilder.toString();
     }
 }

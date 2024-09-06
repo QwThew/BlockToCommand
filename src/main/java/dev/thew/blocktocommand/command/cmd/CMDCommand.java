@@ -30,7 +30,9 @@ public class CMDCommand extends LongCommandExecutor {
 
         if (!sender.hasPermission(wrapper.permission()) && !sender.hasPermission("blockcmd.edit.admin")) return true;
 
-        wrapper.command().execute(sender, args);
+        String[] arguments = new String[args.length - 1];
+        System.arraycopy(args, 1, arguments, 0, args.length - 1);
+        wrapper.command().execute(sender, arguments);
         return true;
     }
 
@@ -41,6 +43,8 @@ public class CMDCommand extends LongCommandExecutor {
         final SubCommandWrapper wrapper = getWrapperFromLabel(args[0]);
         if (wrapper == null) return null;
 
-        return wrapper.command().onTabComplete(sender, args);
+        String[] arguments = new String[args.length - 1];
+        System.arraycopy(args, 1, arguments, 0, args.length - 1);
+        return wrapper.command().onTabComplete(sender, arguments);
     }
 }

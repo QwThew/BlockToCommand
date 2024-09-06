@@ -45,7 +45,7 @@ public class CMDService implements Listener {
 
         for (String key : cmdSection.getKeys(false)){
             Block block = StringUtils.getBlockFromString(key);
-            Validate.notNull(block, "Block \"" + key + "\" is null");
+            if (block == null) return;
 
             ConfigurationSection commandSection = cmdSection.getConfigurationSection(key);
             assert commandSection != null;
@@ -78,34 +78,27 @@ public class CMDService implements Listener {
         return null;
     }
 
-    public boolean isCMDBlockExist(Block block){
+    public boolean isCMDBlockExist(Block block) {
         return getCMDBlock(block) != null;
     }
 
-    private void addToConfig(CMDBlock cmdBlock){
-        setConfig(cmdBlock, cmdBlock.getCmdCommand().getCommand(), cmdBlock.getCmdCommand().getType().name());
-    }
+    public void addCMDBlock(CMDBlock cmdBlock){
+        cmdBlocks.add(cmdBlock);
 
-    private void removeFromConfig(CMDBlock cmdBlock){
-        setConfig(cmdBlock, null, null);
-    }
-
-    private void setConfig(CMDBlock cmdBlock, String command, String type){
-        config.set(StringUtils.blockToString(cmdBlock.getBlock()) + ".command", command);
-        config.set(StringUtils.blockToString(cmdBlock.getBlock()) + ".type", type);
+        config.set("blocks." + StringUtils.blockToString(cmdBlock.getBlock()) + ".command", cmdBlock.getCmdCommand().getCommand());
+        config.set("blocks." + StringUtils.blockToString(cmdBlock.getBlock()) + ".type", cmdBlock.getCmdCommand().getType().name());
 
         plugin.saveConfig();
         plugin.reloadConfig();
     }
 
-    public void addCMDBlock(CMDBlock cmdBlock){
-        cmdBlocks.add(cmdBlock);
-        addToConfig(cmdBlock);
-    }
-
     public void removeCMDBlock(CMDBlock cmdBlock){
         cmdBlocks.remove(cmdBlock);
-        removeFromConfig(cmdBlock);
+
+        config.set("blocks." + StringUtils.blockToString(cmdBlock.getBlock()), null);
+
+        plugin.saveConfig();
+        plugin.reloadConfig();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -119,6 +112,7 @@ public class CMDService implements Listener {
 
         Player player = event.getPlayer();
         CMDBlock.execute(player);
+        event.setCancelled(true);
     }
 
 }
